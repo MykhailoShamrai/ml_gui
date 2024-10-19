@@ -1,0 +1,45 @@
+# Ignore all files
+*
+
+# Except Python files
+!*.py
+
+# Ignore PyCharm project files
+.idea/
+
+# Ignore virtual environment directories
+venv/
+.env/
+ENV/
+env/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore log files
+*.log
+
+# Ignore coverage and test result files
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Ignore build files
+build/
+dist/
+*.egg-info/
+.eggs/
+MANIFEST
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore other common Python environment files
+.Python
