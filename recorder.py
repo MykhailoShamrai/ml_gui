@@ -13,7 +13,7 @@ class Recorder:
         self._format = pyaudio.paInt16
         self._channels = 1  # Mono
         self._rate = 44100  # Sample rate
-        self._audio = pyaudio.PyAudio()
+        self._audio = None
         self._stream = None
         self._wave_file = None
         self._recording_thread = None
@@ -24,6 +24,10 @@ class Recorder:
             self._wave_file.writeframes(data)
 
     def start_recording(self, filename) -> str:
+        # Reinitialize PyAudio if needed
+        if self._audio is None:
+            self._audio = pyaudio.PyAudio()
+
         out_file_path = os.path.join(self._dest_folder, f"{filename}.wav")
         self._wave_file = wave.open(out_file_path, 'wb')
         self._wave_file.setnchannels(self._channels)
@@ -44,12 +48,20 @@ class Recorder:
     def stop_recording(self):
         self.is_recording = False
         # wait for end of a thread with recording process
-        self._recording_thread.join()
+        if self._recording_thread:
+            self._recording_thread.join()
 
         if self._stream is not None:
             self._stream.stop_stream()
             self._stream.close()
-            self._audio.terminate()
+            self._stream = None
+
         if self._wave_file is not None:
             self._wave_file.close()
             self._wave_file = None
+
+        # Do not terminate PyAudio instance to allow future recordings
+        # If you want to completely close, you can uncomment the next line
+        # if self._audio is not None:
+        #     self._audio.terminate()
+        #     self._audio = None
