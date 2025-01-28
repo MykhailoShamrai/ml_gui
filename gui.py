@@ -29,9 +29,9 @@ def clean_directory(path_dir):
             file_path = os.path.join(path_dir, filename)
 
             if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)  # Usuń plik lub link symboliczny
+                os.unlink(file_path)
             elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)  # Usuń cały folder wraz z zawartością
+                shutil.rmtree(file_path)
     except Exception as e:
         print(f"Failed to remove content of {path_dir}. Reason: {e}")
 
@@ -47,7 +47,8 @@ class MainWindow(wx.Frame):
             self.device = torch.device("cpu")
 
         self.model = SpectrogramCNN(num_classes=2)
-        self.model_path = "ours_best_cnn.pth"
+        self.model_path = "ours_best_cnn.pth"   # Add name of .pth file for weights from trained model in
+                                                # the folder of project.
         self.model.load_state_dict(torch.load(self.model_path, map_location=self.device))
         self.model.to(self.device)
         self.model.eval()
@@ -131,9 +132,11 @@ class MainWindow(wx.Frame):
         dir_path_to_cut_segments = os.path.join(self.temp_dir, self.cut_segments_dirname)
         dir_path_to_removed_silence = os.path.join(self.temp_dir, self.removed_silence_dirname)
         dir_path_to_spectrograms = os.path.join(self.temp_dir, self.spectrograms_dirname)
+        dir_path_to_removed_noise = os.path.join(self.temp_dir, self.removed_noise_dirname)
         clean_directory(dir_path_to_cut_segments)
         clean_directory(dir_path_to_removed_silence)
         clean_directory(dir_path_to_spectrograms)
+        clean_directory(dir_path_to_removed_noise)
 
         # Disable all buttons during processing
 
@@ -167,7 +170,7 @@ class MainWindow(wx.Frame):
             # After that we should remove silence
             filename_without_silence = os.path.basename(self.selected_file).rsplit('.', 1)[0] + '_without_silence.wav'
             file_without_silence = os.path.join(self.temp_dir, self.removed_silence_dirname, filename_without_silence)
-            remove_silence(self.selected_file, file_without_silence)
+            remove_silence(file_without_noise, file_without_silence)
 
 
 
@@ -225,10 +228,10 @@ class MainWindow(wx.Frame):
                     spectrogram_path = os.path.join(spectrograms_dir, filename)
                     spectrogram = Image.open(spectrogram_path)
 
-                    spectrogram = spectrogram.convert('L')
 
                     transform = transforms.Compose([
                         transforms.Resize((224, 224)),
+                        transforms.Grayscale(),
                         transforms.ToTensor(),
                         transforms.Normalize(mean=[0.5], std=[0.5])
                     ])

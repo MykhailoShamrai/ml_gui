@@ -1,8 +1,5 @@
-# Ignore all files
-*
-
-# Except Python files
-!*.py
+# Ignore .pth file
+*.pth
 
 # Ignore PyCharm project files
 .idea/
