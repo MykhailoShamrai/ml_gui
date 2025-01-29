@@ -5,9 +5,6 @@ import librosa
 from pathlib import Path
 import noisereduce as nr
 
-from create_spectrograms import plot_spectrogram_and_save
-
-
 def remove_noise_from_directory(input_dir, output_dir, noise_clip_length=1.0,
                                 noise_reduction_type='stationary',
                                 prop_decrease=1.0):
