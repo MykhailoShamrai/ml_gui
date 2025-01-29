@@ -1,6 +1,5 @@
 import shutil
 import threading
-from tkinter import filedialog
 import torch
 from PIL import Image
 from pathlib import Path
@@ -9,7 +8,6 @@ import os
 from recorder import Recorder
 from wx import FileDialog
 from datetime import datetime
-from foo import foo
 from remove_noise import remove_noise_from_wav
 from remove_silence import remove_silence
 from remove_silence import check_if_wav_is_longer
@@ -17,6 +15,7 @@ from split_all_files import split_all_files
 from save_spectrograms import save_spectrograms
 from cnn import SpectrogramCNN
 import torchvision.transforms as transforms
+from modified_cnn import ModifiedSpectrogramCNN
 
 
 def generate_file_name() -> str:

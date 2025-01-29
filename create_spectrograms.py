@@ -2,6 +2,8 @@ from pathlib import Path
 import librosa
 import librosa.display
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import soundfile as sf
 
