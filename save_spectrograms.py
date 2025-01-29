@@ -1,7 +1,4 @@
-from random import sample
-
 from create_spectrograms import plot_spectrogram_and_save, IMG_OUTPUT_PATH
-from adjustLength import extract_segments_from_audio
 import soundfile as sf
 from pathlib import Path
 
