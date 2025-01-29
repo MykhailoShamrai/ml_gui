@@ -15,6 +15,7 @@ from split_all_files import split_all_files
 from save_spectrograms import save_spectrograms
 from cnn import SpectrogramCNN
 import torchvision.transforms as transforms
+from modified_cnn import ModifiedSpectrogramCNN
 
 
 def generate_file_name() -> str:
