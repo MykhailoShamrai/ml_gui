@@ -39,3 +39,4 @@ python gui.py
 
 You can load files from DAPS dataset to our program and also voice can be recorded.
 
+Our model was trained on scripts 1, 2 and 3. Validation set were scripts 4, so it's best to test our model on script 5.
