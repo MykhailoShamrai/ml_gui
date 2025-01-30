@@ -45,8 +45,8 @@ class MainWindow(wx.Frame):
         else:
             self.device = torch.device("cpu")
 
-        self.model = SpectrogramCNN(num_classes=2)
-        self.model_path = "best_cnn_default.pth"   # Add name of .pth file for weights from trained model in
+        self.model = ModifiedSpectrogramCNN(num_classes=2)
+        self.model_path = "best_cnn_modified.pth"   # Add name of .pth file for weights from trained model in
                                                 # the folder of project.
         self.model.load_state_dict(torch.load(self.model_path, map_location=self.device))
         self.model.to(self.device)
